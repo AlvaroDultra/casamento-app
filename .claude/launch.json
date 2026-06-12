@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "casamento-web",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "casamento-web", "run", "dev"],
+      "port": 3000
+    }
+  ]
+}

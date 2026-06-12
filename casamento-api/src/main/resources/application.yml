@@ -1,0 +1,46 @@
+spring:
+  datasource:
+    # SPRING_DATASOURCE_URL tem prioridade (uso local). Em produção (Render),
+    # a URL é composta a partir de DB_HOST/DB_PORT/DB_NAME injetados pelo Blueprint.
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:casamento}}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:postgres123}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: false
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 105MB
+      max-request-size: 110MB
+
+jwt:
+  secret: ${JWT_SECRET:dev-secret-key-change-in-production-must-be-256-bits-long-enough}
+  expiration-ms: ${JWT_EXPIRATION_MS:2592000000} # 30 dias - convidado nao precisa relogar durante a festa
+
+cors:
+  allowed-origin: ${FRONTEND_ORIGIN:http://localhost:3000}
+
+app:
+  timezone: America/Bahia
+  upload:
+    max-image-mb: ${MAX_IMAGE_MB:10}
+    max-video-mb: ${MAX_VIDEO_MB:100}
+  cloudinary:
+    cloud-name: ${CLOUDINARY_CLOUD_NAME:}
+    api-key: ${CLOUDINARY_API_KEY:}
+    api-secret: ${CLOUDINARY_API_SECRET:}
+
+server:
+  port: ${PORT:8080}
+  error:
+    include-message: always       # expõe as mensagens de erro amigáveis no JSON de resposta
+    include-binding-errors: always # detalha erros de validação de campos

@@ -1,0 +1,68 @@
+# ============================================================
+#  Render Blueprint — backend (Spring Boot) + PostgreSQL
+#  Importe em: Render Dashboard → New → Blueprint → conecte o repo
+#  Ele cria o banco e a API, e injeta a conexão automaticamente.
+#  Variáveis marcadas com sync:false você preenche no dashboard.
+# ============================================================
+
+databases:
+  - name: casamento-db
+    databaseName: casamento
+    plan: free
+    region: oregon
+
+services:
+  - type: web
+    name: casamento-api
+    runtime: docker
+    plan: free
+    region: oregon
+    dockerfilePath: ./casamento-api/Dockerfile
+    dockerContext: ./casamento-api
+    healthCheckPath: /ping
+    envVars:
+      # --- Conexão do banco (injetada automaticamente pelo Render) ---
+      - key: SPRING_DATASOURCE_USERNAME
+        fromDatabase:
+          name: casamento-db
+          property: user
+      - key: SPRING_DATASOURCE_PASSWORD
+        fromDatabase:
+          name: casamento-db
+          property: password
+      - key: DB_HOST
+        fromDatabase:
+          name: casamento-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: casamento-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: casamento-db
+          property: database
+
+      # --- Segurança ---
+      - key: JWT_SECRET
+        generateValue: true          # Render gera um segredo forte
+      - key: JWT_EXPIRATION_MS
+        value: "2592000000"          # 30 dias
+
+      # --- Origem do frontend (CORS) — preencher com a URL da Vercel ---
+      - key: FRONTEND_ORIGIN
+        sync: false
+
+      # --- Cloudinary (preencher no dashboard; nunca commitar segredos) ---
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+
+      # --- Limites de upload (vídeo menor no plano free p/ não estourar memória) ---
+      - key: MAX_IMAGE_MB
+        value: "10"
+      - key: MAX_VIDEO_MB
+        value: "45"

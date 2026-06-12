@@ -1,0 +1,6 @@
+# Normaliza quebras de linha para LF no repositório (build roda em Linux)
+* text=auto eol=lf
+
+# Arquivos Windows mantêm CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf

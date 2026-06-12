@@ -1,0 +1,27 @@
+# ===== Segredos / ambiente (NUNCA commitar) =====
+.env
+.env.local
+.env*.local
+**/.env
+**/.env.local
+
+# ===== Backend (Java / Maven) =====
+casamento-api/target/
+*.class
+*.log
+
+# ===== Frontend (Node / Next) =====
+casamento-web/node_modules/
+casamento-web/.next/
+casamento-web/out/
+casamento-web/next-env.d.ts
+
+# ===== Editores / SO =====
+.idea/
+*.iml
+.vscode/
+.DS_Store
+Thumbs.db
+
+# ===== Claude / local =====
+.claude/settings.local.json
