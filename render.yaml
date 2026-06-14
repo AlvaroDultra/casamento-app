@@ -15,7 +15,7 @@ services:
   - type: web
     name: casamento-api
     runtime: docker
-    plan: free
+    plan: starter        # ~US$7/mês: API sempre ligada (sem hibernação/cold start)
     region: oregon
     dockerfilePath: ./casamento-api/Dockerfile
     dockerContext: ./casamento-api
