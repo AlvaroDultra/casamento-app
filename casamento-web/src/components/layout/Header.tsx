@@ -29,7 +29,7 @@ export default function Header() {
         <div className="flex items-center gap-4 text-sm">
           {user && (
             <Link
-              href={`/profile/${encodeURIComponent(user.nickname)}`}
+              href={`/profile/${user.id}`}
               className="font-medium text-ink hover:text-primary-dark transition"
             >
               {user.nickname}

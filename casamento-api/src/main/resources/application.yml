@@ -24,7 +24,7 @@ spring:
 
 jwt:
   secret: ${JWT_SECRET:dev-secret-key-change-in-production-must-be-256-bits-long-enough}
-  expiration-ms: ${JWT_EXPIRATION_MS:2592000000} # 30 dias - convidado nao precisa relogar durante a festa
+  expiration-ms: ${JWT_EXPIRATION_MS:31536000000} # 1 ano - convidado fica logado no aparelho
 
 cors:
   allowed-origin: ${FRONTEND_ORIGIN:http://localhost:3000}

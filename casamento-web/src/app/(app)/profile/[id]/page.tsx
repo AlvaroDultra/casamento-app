@@ -10,17 +10,16 @@ import PostCard from "@/components/feed/PostCard";
 import type { Page, Post, User } from "@/types";
 
 export default function ProfilePage() {
-  const { nickname } = useParams<{ nickname: string }>();
+  const { id } = useParams<{ id: string }>();
   const [user, setUser] = useState<User | null>(null);
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
-    const enc = encodeURIComponent(nickname);
     Promise.all([
-      api.get<User>(`/api/users/${enc}`),
-      api.get<Page<Post>>(`/api/posts/user/${enc}`, { params: { size: 50 } }),
+      api.get<User>(`/api/users/${id}`),
+      api.get<Page<Post>>(`/api/posts/user/${id}`, { params: { size: 50 } }),
     ])
       .then(([u, p]) => {
         setUser(u.data);
@@ -28,10 +27,10 @@ export default function ProfilePage() {
       })
       .catch((err) => toast.error(apiError(err)))
       .finally(() => setLoading(false));
-  }, [nickname]);
+  }, [id]);
 
-  function handleDeleted(id: string) {
-    setPosts((prev) => prev.filter((p) => p.id !== id));
+  function handleDeleted(postId: string) {
+    setPosts((prev) => prev.filter((p) => p.id !== postId));
   }
 
   if (loading) {

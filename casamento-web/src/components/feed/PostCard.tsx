@@ -21,7 +21,7 @@ export default function PostCard({ post, onDeleted }: Props) {
   const [busy, setBusy] = useState(false);
 
   const isMine = currentUser?.id === post.author.id;
-  const profileHref = `/profile/${encodeURIComponent(post.author.nickname)}`;
+  const profileHref = `/profile/${post.author.id}`;
 
   async function toggleLike() {
     if (busy) return;

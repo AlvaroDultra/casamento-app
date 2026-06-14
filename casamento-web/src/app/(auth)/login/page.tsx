@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import toast from "react-hot-toast";
 import api from "@/lib/api";
 import { apiError, formatWeddingDate } from "@/lib/utils";
@@ -11,10 +10,10 @@ import { wedding } from "@/config/wedding";
 import Ornament from "@/components/ui/Ornament";
 import type { AuthResponse } from "@/types";
 
-export default function LoginPage() {
+export default function WelcomePage() {
   const router = useRouter();
   const { setAuth, rehydrate, isAuthenticated } = useAuthStore();
-  const [form, setForm] = useState({ nickname: "", password: "" });
+  const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -26,11 +25,11 @@ export default function LoginPage() {
     e.preventDefault();
     setLoading(true);
     try {
-      const { data } = await api.post<AuthResponse>("/auth/login", form);
+      const { data } = await api.post<AuthResponse>("/auth/guest", { nickname: name });
       setAuth(data.token, data.user);
       router.push("/feed");
     } catch (err) {
-      toast.error(apiError(err, "Usuário ou senha inválidos"));
+      toast.error(apiError(err, "Não foi possível entrar"));
     } finally {
       setLoading(false);
     }
@@ -56,43 +55,35 @@ export default function LoginPage() {
           <p className="text-sm text-ink-soft mt-1">{wedding.tagline}</p>
         </div>
 
-        {/* Card de login */}
+        {/* Entrada só com o nome */}
         <div className="luxe-card p-7">
-          <h2 className="font-display text-2xl text-ink mb-6 text-center">Entrar</h2>
+          <h2 className="font-display text-2xl text-ink mb-2 text-center">Como você se chama?</h2>
+          <p className="text-sm text-ink-soft text-center mb-6">{wedding.welcomeMessage}</p>
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label className="label-luxe block mb-2">Seu nome</label>
               <input
                 type="text"
                 required
-                value={form.nickname}
-                onChange={(e) => setForm({ ...form, nickname: e.target.value })}
-                className="input-luxe"
+                minLength={2}
+                autoFocus
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="input-luxe text-center text-base"
                 placeholder="ex: Tia Ana"
               />
-            </div>
-            <div>
-              <label className="label-luxe block mb-2">Senha</label>
-              <input
-                type="password"
-                required
-                value={form.password}
-                onChange={(e) => setForm({ ...form, password: e.target.value })}
-                className="input-luxe"
-                placeholder="••••••••"
-              />
+              <p className="text-xs text-ink-soft/70 mt-1.5 text-center">
+                É como você vai aparecer nas fotos
+              </p>
             </div>
             <button type="submit" disabled={loading} className="btn-gold w-full py-3 text-sm">
-              {loading ? "Entrando..." : "Entrar"}
+              {loading ? "Entrando..." : "Entrar na festa"}
             </button>
           </form>
         </div>
 
-        <p className="text-center text-sm mt-6 text-ink-soft">
-          Primeira vez aqui?{" "}
-          <Link href="/register" className="text-primary-dark hover:text-primary font-medium underline-offset-4 hover:underline">
-            Criar conta
-          </Link>
+        <p className="text-center text-xs mt-5 text-ink-soft/70">
+          Sem senha, sem cadastro — você fica conectado neste aparelho. 💛
         </p>
       </div>
     </div>

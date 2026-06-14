@@ -1,6 +1,5 @@
 package com.casamento.domain.user;
 
-import com.casamento.domain.user.User;
 import jakarta.validation.Valid;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -26,9 +25,9 @@ public class UserController {
         return toDto(user);
     }
 
-    @GetMapping("/{nickname}")
-    public UserDto getByNickname(@PathVariable String nickname) {
-        User user = userRepository.findByNicknameIgnoreCase(nickname)
+    @GetMapping("/{id}")
+    public UserDto getById(@PathVariable UUID id) {
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Convidado não encontrado"));
         return toDto(user);
     }

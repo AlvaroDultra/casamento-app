@@ -35,10 +35,11 @@ public class PostService {
         return mapPage(posts, currentUserId);
     }
 
-    public Page<PostResponse> getByAuthor(String nickname, Pageable pageable, UUID currentUserId) {
-        User author = userRepository.findByNicknameIgnoreCase(nickname)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Convidado não encontrado"));
-        Page<Post> posts = postRepository.findByAuthorIdOrderByCreatedAtDesc(author.getId(), pageable);
+    public Page<PostResponse> getByAuthor(UUID authorId, Pageable pageable, UUID currentUserId) {
+        if (!userRepository.existsById(authorId)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Convidado não encontrado");
+        }
+        Page<Post> posts = postRepository.findByAuthorIdOrderByCreatedAtDesc(authorId, pageable);
         return mapPage(posts, currentUserId);
     }
 

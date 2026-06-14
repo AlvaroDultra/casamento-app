@@ -12,7 +12,7 @@ casamento-app/
 
 - **Contas, posts, comentários e curtidas** → banco PostgreSQL
 - **Fotos e vídeos** → Cloudinary (armazenamento de mídia)
-- **Login** → nome de usuário + senha (simples, sem e-mail), com token JWT válido por 30 dias
+- **Login sem senha** → o convidado só digita o nome na primeira visita e fica conectado naquele aparelho (token JWT válido por 1 ano). A identidade é por aparelho; nomes podem repetir
 
 ---
 

@@ -74,7 +74,7 @@ export default function CommentSection({ postId }: { postId: string }) {
               </div>
               <div className="flex-1">
                 <p className="text-sm text-ink/90 leading-relaxed">
-                  <Link href={`/profile/${encodeURIComponent(c.authorNickname)}`} className="font-display font-semibold text-ink mr-1.5">
+                  <Link href={`/profile/${c.authorId}`} className="font-display font-semibold text-ink mr-1.5">
                     {c.authorNickname}
                   </Link>
                   {c.content}

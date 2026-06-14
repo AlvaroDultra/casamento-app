@@ -20,10 +20,12 @@ public class User {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false, unique = true, length = 50)
+    // Nome de exibição (pode repetir entre convidados — a identidade é o id)
+    @Column(nullable = false, length = 50)
     private String nickname;
 
-    @Column(name = "password_hash", nullable = false)
+    // Sem uso no login por aparelho; mantido nullable por compatibilidade
+    @Column(name = "password_hash")
     private String passwordHash;
 
     @Column(name = "avatar_url", length = 500)

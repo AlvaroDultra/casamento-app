@@ -34,13 +34,13 @@ public class PostController {
         return postService.getById(id, idOrNull(user));
     }
 
-    @GetMapping("/user/{nickname}")
+    @GetMapping("/user/{authorId}")
     public Page<PostService.PostResponse> getByAuthor(
             @AuthenticationPrincipal User user,
-            @PathVariable String nickname,
+            @PathVariable UUID authorId,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size) {
-        return postService.getByAuthor(nickname, PageRequest.of(page, size), idOrNull(user));
+        return postService.getByAuthor(authorId, PageRequest.of(page, size), idOrNull(user));
     }
 
     @PostMapping

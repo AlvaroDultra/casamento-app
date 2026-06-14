@@ -47,7 +47,7 @@ services:
       - key: JWT_SECRET
         generateValue: true          # Render gera um segredo forte
       - key: JWT_EXPIRATION_MS
-        value: "2592000000"          # 30 dias
+        value: "31536000000"         # 1 ano
 
       # --- Origem do frontend (CORS) — preencher com a URL da Vercel ---
       - key: FRONTEND_ORIGIN
